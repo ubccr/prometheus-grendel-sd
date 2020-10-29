@@ -1,0 +1,18 @@
+[Unit]
+Description=prometheus-grendel-sd
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=grendel
+Group=grendel
+ExecReload=/bin/kill -HUP $MAINPID
+WorkingDirectory=/opt/prometheus-grendel-sd
+ExecStart=/opt/prometheus-grendel-sd/prometheus-grendel-sd --output.file=/etc/prometheus/grendel_sd.json
+
+SyslogIdentifier=prometheus-grendel-sd
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
